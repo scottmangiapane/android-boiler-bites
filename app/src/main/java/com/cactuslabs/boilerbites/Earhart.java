@@ -47,6 +47,8 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
             return null;
         }
     }
+
+    @Override
     protected String doInBackground(URL... urls){
         try {
             Scanner sc = new Scanner(urls[0].openStream());
@@ -61,7 +63,7 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
             return null;
         }
     }
-  
+
 
     public String[] getBreakfastItems() {
         try {

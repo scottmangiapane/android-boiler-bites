@@ -37,7 +37,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d4d0bfdf-0af2-4589-933f-9b73bd5a123f" name="Default" comment="Initial commit.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/NotificationBuilder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/NotificationBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/Preferences.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/Preferences.java" />
     </list>
     <ignored path="BoilerBites.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,8 +70,8 @@
       <file leaf-file-name="NotificationBuilder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/NotificationBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9375">
-              <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.28125">
+              <caret line="15" column="52" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -2468,8 +2467,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cactuslabs/boilerbites/NotificationBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9375">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.28125">
+          <caret line="15" column="52" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

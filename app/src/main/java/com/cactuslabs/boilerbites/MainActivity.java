@@ -1,6 +1,8 @@
 package com.cactuslabs.boilerbites;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-//                startActivity(new Intent(this, SettingsActivity.class));
+                new AlertDialog.Builder(this)
+                        .setTitle("About")
+                        .setMessage("Welcome to BoilerBites. This app keeps you up to date on " +
+                                "your favorite foods by sending you notifications when they are " +
+                                "being served on campus.")
+                        .setPositiveButton("OK️", null)
+                        .show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

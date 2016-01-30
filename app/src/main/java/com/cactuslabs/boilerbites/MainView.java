@@ -1,9 +1,7 @@
 package com.cactuslabs.boilerbites;
 
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,7 +25,7 @@ public class MainView {
         this.keywordListView = (ListView) activity.findViewById(R.id.keyword_list_view);
         this.splashTextView = (TextView) activity.findViewById(R.id.splash_text_view);
         this.preferences = new Preferences(activity);
-        splashString = "Nothing here!\nAdd a food above to get started.";
+        splashString = "Nothing here!\nAdd a food to get started.";
         setUp();
     }
 

@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class KeywordListAdapter extends BaseAdapter {
     private Context context;
+    private MainView mainView;
     private String[] keywords;
 
-    public KeywordListAdapter(Activity activity, String[] keywordStrings) {
+    public KeywordListAdapter(Activity activity, MainView mainView, String[] keywordStrings) {
         this.context = activity;
-        keywords = keywordStrings;
+        this.mainView = mainView;
+        this.keywords = keywordStrings;
     }
 
     @Override
@@ -33,14 +36,17 @@ public class KeywordListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater
                 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.list_view_item, null);
-        ImageView trashImageView = (ImageView) view.findViewById(R.id.trash_image);
+        TextView listText = (TextView) view.findViewById(R.id.list_text);
+        ImageView trashImageView = (ImageView) view.findViewById(R.id.trash_image_view);
+        listText.setText(keywords[position]);
         trashImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mainView.deleteKeyword(position);
             }
         });
         return view;

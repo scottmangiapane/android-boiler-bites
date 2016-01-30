@@ -1,9 +1,9 @@
 package com.cactuslabs.boilerbites;
 
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,6 +31,16 @@ public class MainView {
         setUp();
     }
 
+    public void deleteKeyword(int position) {
+        String text = keywordListView.getItemAtPosition(position) + "\t";
+        preferences.setData(preferences.getData().replaceFirst(text, ""));
+        if (preferences.getData().equals("")) {
+            cardView.setVisibility(View.INVISIBLE);
+            splashTextView.setText(splashString);
+        }
+        activity.refresh();
+    }
+
     private void setUp() {
         addEditText.requestFocus();
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -46,23 +56,8 @@ public class MainView {
                 }
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<>
-                (activity, R.layout.list_view_item, R.id.list_text, preferences.getData().split("\t"));
-        keywordListView.setAdapter(adapter);
-        keywordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (id == R.id.trash_image) {
-                    String text = keywordListView.getItemAtPosition(position) + "\t";
-                    preferences.setData(preferences.getData().replaceFirst(text, ""));
-                    if (preferences.getData().equals("")) {
-                        cardView.setVisibility(View.INVISIBLE);
-                        splashTextView.setText(splashString);
-                    }
-                    activity.refresh();
-                }
-            }
-        });
+        keywordListView.setAdapter
+                (new KeywordListAdapter(activity, this, preferences.getData().split("\t")));
         if (preferences.getData().equals("")) {
             cardView.setVisibility(View.INVISIBLE);
             splashTextView.setText(splashString);

@@ -12,8 +12,9 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.app_bar));
+        setContentView(R.layout.activity_overview);
+        setSupportActionBar((Toolbar) findViewById(R.id.overview_bar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         new OverviewView(this);
     }
 
@@ -27,8 +28,9 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.:
-            //todo
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

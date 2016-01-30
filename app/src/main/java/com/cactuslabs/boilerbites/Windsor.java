@@ -1,5 +1,7 @@
 package com.cactuslabs.boilerbites;
 
+import android.os.AsyncTask;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +14,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-public class Windsor  extends AsyncTask<URL, Integer, String>  implements DiningCourt {
+public class Windsor  extends AsyncTask<URL, Integer, String> implements DiningCourt {
     private JSONObject menu;
 
     public Windsor() {

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.cactuslabs.boilerbites.MainActivity">
     <item
+        android:id="@+id/about"
         android:icon="@drawable/ic_help_white_24dp"
         android:title="About"
         app:showAsAction="always" />

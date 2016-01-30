@@ -15,8 +15,7 @@ public class NotificationBuilder extends BroadcastReceiver {
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_local_dining_white_24dp)
                         .setContentTitle("BoilerBites")
-                        .setContentText("Your favorite foods are being served. Click for more " +
-                                "information.");
+                        .setContentText("Your favorite foods are being served.");
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(new Intent(context, MainActivity.class));

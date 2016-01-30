@@ -3,6 +3,7 @@ package com.cactuslabs.boilerbites;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -72,5 +73,17 @@ public class MainView {
     }
 
     private void setUpAlarmManager() {
+        //todo check if favorite food(s) are being served, only execute this code if they are
+        Intent i = new Intent(activity, NotificationBuilder.class);
+        PendingIntent pi = PendingIntent.getBroadcast(activity,
+                0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager)
+                activity.getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 41);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                1000 * 60 * 60 * 24, pi);
     }
 }

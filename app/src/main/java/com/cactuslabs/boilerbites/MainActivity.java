@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.about:
                 new AlertDialog.Builder(this)
                         .setTitle("About")
                         .setMessage("Welcome to BoilerBites. This app keeps you up to date on " +

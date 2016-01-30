@@ -40,7 +40,7 @@ public class OverviewView {
             String lunchCourts = foodSearcher.getLunchCourts(keywords[x]);
             if(lunchCourts != null && !firstLunch){
                 firstLunch = true;
-                output = output + "Breakfast:\n\t\t" + keywords[x] + "at " + lunchCourts + "\n\t\t";
+                output = output + "Lunch:\n\t\t" + keywords[x] + "at " + lunchCourts + "\n\t\t";
             }else if (lunchCourts != null && firstLunch){
                 output = output + keywords[x] + "at " + lunchCourts + "\n\t\t";
             }
@@ -52,7 +52,7 @@ public class OverviewView {
             String dinnerCourts = foodSearcher.getDinnerCourts(keywords[x]);
             if(dinnerCourts != null && !firstDinner){
                 firstDinner = true;
-                output = output + "Breakfast:\n\t\t" + keywords[x] + "at " + dinnerCourts + "\n\t\t";
+                output = output + "Dinner:\n\t\t" + keywords[x] + "at " + dinnerCourts + "\n\t\t";
             }else if (dinnerCourts != null && firstDinner){
                 output = output + keywords[x] + "at " + dinnerCourts + "\n\t\t";
             }

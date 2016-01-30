@@ -11,7 +11,7 @@ import android.support.v4.app.TaskStackBuilder;
 public class NotificationBuilder extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        /*Preferences preferences = new Preferences(context);
+        Preferences preferences = new Preferences(context);
         String[] keywords = preferences.getData().split("\t");
         FoodSearcher foodSearcher = new FoodSearcher();
         boolean foundfoods = false;
@@ -22,7 +22,7 @@ public class NotificationBuilder extends BroadcastReceiver {
                 break;
             }
         }
-        if (foundfoods) {*/
+        if (foundfoods) {
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_local_dining_white_24dp)
@@ -37,6 +37,6 @@ public class NotificationBuilder extends BroadcastReceiver {
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify((int) (Math.random() * 10000), builder.build());
-//        }
+        }
     }
 }

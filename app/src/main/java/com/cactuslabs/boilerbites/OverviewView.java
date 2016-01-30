@@ -13,7 +13,7 @@ public class OverviewView {
         this.preferences = new Preferences(activity);
         this.keywords = preferences.getData().split("\t");
         this.overviewTextView = (TextView) activity.findViewById(R.id.overview_text_view);
-        //setUp();
+        setUp();
     }
 
     private void setUp() {

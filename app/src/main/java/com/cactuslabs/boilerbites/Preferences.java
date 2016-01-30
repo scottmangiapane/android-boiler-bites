@@ -1,16 +1,15 @@
 package com.cactuslabs.boilerbites;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Preferences {
-    Activity activity;
+    Context context;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public Preferences(Activity activity) {
-        this.activity = activity;
+    public Preferences(Context activity) {
+        this.context = activity;
         sharedPreferences = activity.getSharedPreferences("com.cactuslabs.boilerbites", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }

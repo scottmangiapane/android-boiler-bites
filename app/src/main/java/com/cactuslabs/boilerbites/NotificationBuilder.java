@@ -11,6 +11,9 @@ import android.support.v4.app.TaskStackBuilder;
 public class NotificationBuilder extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Preferences preferences = new Preferences(context);
+        String[] keywords = preferences.getData().split("\t");
+        //start
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_local_dining_white_24dp)
@@ -24,6 +27,7 @@ public class NotificationBuilder extends BroadcastReceiver {
         builder.setContentIntent(resultPendingIntent);
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify((int) (Math.random() * 10000), builder.build()); //todo fix
+        notificationManager.notify((int) (Math.random() * 10000), builder.build());
+        //end
     }
 }

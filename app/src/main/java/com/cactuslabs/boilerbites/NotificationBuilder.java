@@ -17,8 +17,8 @@ public class NotificationBuilder extends BroadcastReceiver {
                         .setContentTitle("BoilerBites")
                         .setContentText("Your favorite foods are being served.");
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(new Intent(context, MainActivity.class));
+        stackBuilder.addParentStack(OverviewActivity.class);
+        stackBuilder.addNextIntent(new Intent(context, OverviewActivity.class));
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);

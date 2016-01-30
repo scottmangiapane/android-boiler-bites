@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -35,7 +35,8 @@ public class MainView {
         this.preferences = new Preferences(activity);
         this.splashString = "Nothing here!\nAdd foods to get started.";
         setUpViews();
-        setUpAlarmManager();
+        if (preferences.isFirstRun())
+            setUpAlarmManager();
     }
 
     public void deleteKeyword(int position) {
@@ -73,7 +74,6 @@ public class MainView {
     }
 
     private void setUpAlarmManager() {
-        //todo check if favorite food(s) are being served, only execute this code if they are
         Intent i = new Intent(activity, NotificationBuilder.class);
         PendingIntent pi = PendingIntent.getBroadcast(activity,
                 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -81,9 +81,10 @@ public class MainView {
                 activity.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 41);
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 13);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 1000 * 60 * 60 * 24, pi);
+        Toast.makeText(activity, "Alarm set", Toast.LENGTH_LONG);
     }
 }

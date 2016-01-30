@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".OverviewActivity"
+            android:label="Overview"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true">
@@ -29,6 +38,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
+        
         <receiver android:name=".NotificationBuilder" />
     </application>
 

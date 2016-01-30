@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-public class Hillenbrand implements DiningCourt {
+public class Hillenbrand  extends AsyncTask<URL, Integer, String>  implements DiningCourt {
     private JSONObject menu;
 
     public Hillenbrand() {
@@ -26,22 +26,39 @@ public class Hillenbrand implements DiningCourt {
             String urlInital = "http://api.hfs.purdue.edu/menus/v1/locations/Hillenbrand/";
             String url = urlInital + date;
             URL website = new URL(url);
-            Scanner sc = new Scanner(website.openStream());
+            /*Scanner sc = new Scanner(website.openStream());
             String menuData = "";
             while (sc.hasNext()){
                 menuData = menuData + " " + sc.next();
-            }
+            }*/
+            String menuData = doInBackground(website);
             JSONObject menu = new JSONObject(menuData);
             return menu;
         }
         catch(IOException e){
             e.printStackTrace();
             return null;
-        } catch(JSONException e){
+        }
+        catch(JSONException e){
             e.printStackTrace();
             return null;
         }
     }
+    protected String doInBackground(URL... urls){
+        try {
+            Scanner sc = new Scanner(urls[0].openStream());
+            String menuData = "";
+            while (sc.hasNext()) {
+                menuData = menuData + " " + sc.next();
+            }
+            return menuData;
+
+        }catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+  
 
     public String[] getBreakfastItems() {
         try {

@@ -1,5 +1,9 @@
 package com.cactuslabs.boilerbites;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +29,9 @@ public class MainView {
         this.keywordListView = (ListView) activity.findViewById(R.id.keyword_list_view);
         this.splashTextView = (TextView) activity.findViewById(R.id.splash_text_view);
         this.preferences = new Preferences(activity);
-        splashString = "Nothing here!\nAdd a food to get started.";
-        setUp();
+        this.splashString = "Nothing here!\nAdd foods to get started.";
+        setUpViews();
+        setUpAlarmManager();
     }
 
     public void deleteKeyword(int position) {
@@ -37,9 +42,10 @@ public class MainView {
             splashTextView.setText(splashString);
         }
         activity.refresh();
+        //Snackbar.make(activity.getApplicationContext(), "Deleted", Snackbar.LENGTH_SHORT).show();
     }
 
-    private void setUp() {
+    private void setUpViews() {
         addEditText.requestFocus();
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,5 +66,18 @@ public class MainView {
             cardView.setVisibility(View.INVISIBLE);
             splashTextView.setText(splashString);
         }
+    }
+
+    private void setUpAlarmManager() {
+        /*PendingIntent pi = PendingIntent.getBroadcast(getActivity(),
+                (int) (Math.random() * 100), i, PendingIntent.FLAG_UPDATE_CURRENT); // todo fix this tag
+        AlarmManager am = (AlarmManager)
+                getActivity().getSystemService(Context.ALARM_SERVICE);
+        if (date <= clock.currentDateLong())
+            date = clock.currentDateLong();
+        if (time <= clock.currentTimeLong())
+            time = clock.currentTimeLong();
+        am.set(AlarmManager.RTC_WAKEUP, date + time, pi);
+        updateStoredData();*/
     }
 }

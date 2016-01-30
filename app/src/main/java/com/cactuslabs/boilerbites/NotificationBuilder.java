@@ -13,7 +13,16 @@ public class NotificationBuilder extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Preferences preferences = new Preferences(context);
         String[] keywords = preferences.getData().split("\t");
-        if () { /*true if favorite foods (keywords) are being served*/
+	 FoodSearcher foodSearcher = new FoodSearcher();
+        boolean foundfoods = false;
+        for (int x = 0; x < keywords.length; x++){
+            if(foodSearcher.getBreakfastCourts(keywords[x]) != null || foodSearcher.getLunchCourts(keywords[x]) != 
+                    null || foodSearcher.getDinnerCourts(keywords[x]) != null){
+                    foundfoods = true;
+                    break;
+            }
+        }
+        if (foundfoods) { /*true if favorite foods (keywords) are being served*/
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_local_dining_white_24dp)

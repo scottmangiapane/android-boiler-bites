@@ -3,6 +3,7 @@ package com.cactuslabs.boilerbites;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 public class MainView {
     private MainActivity activity;
@@ -42,7 +45,7 @@ public class MainView {
             splashTextView.setText(splashString);
         }
         activity.refresh();
-        //Snackbar.make(activity.getApplicationContext(), "Deleted", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(activity.findViewById(R.id.card_view), "Deleted", Snackbar.LENGTH_SHORT).show();
     }
 
     private void setUpViews() {
@@ -69,15 +72,5 @@ public class MainView {
     }
 
     private void setUpAlarmManager() {
-        /*PendingIntent pi = PendingIntent.getBroadcast(getActivity(),
-                (int) (Math.random() * 100), i, PendingIntent.FLAG_UPDATE_CURRENT); // todo fix this tag
-        AlarmManager am = (AlarmManager)
-                getActivity().getSystemService(Context.ALARM_SERVICE);
-        if (date <= clock.currentDateLong())
-            date = clock.currentDateLong();
-        if (time <= clock.currentTimeLong())
-            time = clock.currentTimeLong();
-        am.set(AlarmManager.RTC_WAKEUP, date + time, pi);
-        updateStoredData();*/
     }
 }

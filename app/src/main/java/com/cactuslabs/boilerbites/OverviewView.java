@@ -3,8 +3,8 @@ package com.cactuslabs.boilerbites;
 import android.widget.TextView;
 
 public class OverviewView {
-    private OverviewActivity activity;
     Preferences preferences;
+    private OverviewActivity activity;
     private String[] keywords;
     private TextView overviewTextView;
 

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 public class MainView {
+    private static String splashString;
     private MainActivity activity;
     private EditText addEditText;
     private Button addButton;
@@ -23,7 +23,6 @@ public class MainView {
     private ListView keywordListView;
     private TextView splashTextView;
     private Preferences preferences;
-    private static String splashString;
 
     public MainView(MainActivity activity) {
         this.activity = activity;

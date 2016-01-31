@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningCourt {
+public class Earhart extends AsyncTask<URL, Integer, String> implements DiningCourt {
     private JSONObject menu;
 
     public Earhart() {
@@ -37,19 +37,17 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
             String menuData = doInBackground(website);
             JSONObject menu = new JSONObject(menuData);
             return menu;
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-        catch(JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    protected String doInBackground(URL... urls){
+    protected String doInBackground(URL... urls) {
         try {
             Scanner sc = new Scanner(urls[0].openStream());
             String menuData = "";
@@ -58,7 +56,7 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
             }
             return menuData;
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -84,7 +82,7 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
                 }
             }
             return breakfastItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -109,7 +107,7 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
                 }
             }
             return lunchItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -134,7 +132,7 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
                 }
             }
             return dinnerItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -142,30 +140,31 @@ public class Earhart  extends AsyncTask<URL, Integer, String> implements DiningC
 
     public boolean contains(String food, String[] meal) {
         food = food.trim();
-        if (meal == null ){
+        if (meal == null) {
             return false;
         }
-        for (int x = 0; x < meal.length; x++){
-            if (meal[x].equalsIgnoreCase(food)){
+        for (int x = 0; x < meal.length; x++) {
+            if (meal[x].equalsIgnoreCase(food)) {
                 return true;
             }
         }
         return false;
     }
-    public String[] containsKeyword(String keyword, String[] meal){
-        if (keyword.equals("")){
+
+    public String[] containsKeyword(String keyword, String[] meal) {
+        if (keyword.equals("")) {
             return new String[0];
         }
         keyword = keyword.trim();
         keyword = keyword.toLowerCase();
-        String [] keywordsarray = new String [0];
+        String[] keywordsarray = new String[0];
         int numitems = 0;
-        if (meal == null ){
+        if (meal == null) {
             return new String[0];
         }
-        for (int x = 0; x < meal.length; x++){
-            if (meal[x].toLowerCase().contains(keyword)){
-                keywordsarray = Arrays.copyOf(keywordsarray, keywordsarray.length +1);
+        for (int x = 0; x < meal.length; x++) {
+            if (meal[x].toLowerCase().contains(keyword)) {
+                keywordsarray = Arrays.copyOf(keywordsarray, keywordsarray.length + 1);
                 keywordsarray[numitems] = meal[x];
                 numitems++;
             }

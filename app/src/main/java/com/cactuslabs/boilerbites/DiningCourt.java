@@ -1,4 +1,6 @@
+package com.cactuslabs.boilerbites;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
 
@@ -10,64 +12,80 @@ public abstract class DiningCourt {
     }
 
     public abstract JSONObject getMenu();
+
     public String[] getBreakfastItems() {
-        String [] breakfastItems = new String[0];
-        int numitems = 0;
-        JSONArray breakfast = menu.getJSONArray("Breakfast");
-        if (breakfast == null || breakfast.length() == 0){
-            breakfastItems = Arrays.copyOf(breakfastItems, breakfastItems.length + 1);
-            breakfastItems[0] = "Not Serving";
-            return breakfastItems;
-        }
-        for (int i = 0; i < breakfast.length(); i++) {
-            JSONArray items = breakfast.getJSONObject(i).getJSONArray("Items");
-            for (int x = 0; x < items.length(); x++) {
+        try {
+            String[] breakfastItems = new String[0];
+            int numitems = 0;
+            JSONArray breakfast = menu.getJSONArray("Breakfast");
+            if (breakfast == null || breakfast.length() == 0) {
                 breakfastItems = Arrays.copyOf(breakfastItems, breakfastItems.length + 1);
-                breakfastItems[numitems] = items.getJSONObject(x).getString("Name");
-                numitems++;
+                breakfastItems[0] = "Not Serving";
+                return breakfastItems;
             }
+            for (int i = 0; i < breakfast.length(); i++) {
+                JSONArray items = breakfast.getJSONObject(i).getJSONArray("Items");
+                for (int x = 0; x < items.length(); x++) {
+                    breakfastItems = Arrays.copyOf(breakfastItems, breakfastItems.length + 1);
+                    breakfastItems[numitems] = items.getJSONObject(x).getString("Name");
+                    numitems++;
+                }
+            }
+            return breakfastItems;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
         }
-        return breakfastItems;
     }
 
     public String[] getLunchItems() {
-        String [] lunchItems = new String[0];
-        int numitems = 0;
-        JSONArray lunch = menu.getJSONArray("Lunch");
-        if (lunch == null || lunch.length() == 0){
-            lunchItems = Arrays.copyOf(lunchItems,lunchItems.length + 1);
-            lunchItems[0] = "Not Serving";
-            return lunchItems;
-        }
-        for (int i = 0; i < lunch.length(); i++) {
-            JSONArray items = lunch.getJSONObject(i).getJSONArray("Items");
-            for (int x = 0; x < items.length(); x++) {
+        try {
+            String[] lunchItems = new String[0];
+            int numitems = 0;
+            JSONArray lunch = menu.getJSONArray("Lunch");
+            if (lunch == null || lunch.length() == 0) {
                 lunchItems = Arrays.copyOf(lunchItems, lunchItems.length + 1);
-                lunchItems[numitems] = items.getJSONObject(x).getString("Name");
-                numitems++;
+                lunchItems[0] = "Not Serving";
+                return lunchItems;
             }
+            for (int i = 0; i < lunch.length(); i++) {
+                JSONArray items = lunch.getJSONObject(i).getJSONArray("Items");
+                for (int x = 0; x < items.length(); x++) {
+                    lunchItems = Arrays.copyOf(lunchItems, lunchItems.length + 1);
+                    lunchItems[numitems] = items.getJSONObject(x).getString("Name");
+                    numitems++;
+                }
+            }
+            return lunchItems;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
         }
-        return lunchItems;
     }
 
     public String[] getDinnerItems() {
-        String [] dinnerItems = new String[0];
-        int numitems = 0;
-        JSONArray dinner = menu.getJSONArray("Dinner");
-        if (dinner == null || dinner.length() == 0){
-            dinnerItems = Arrays.copyOf(dinnerItems,dinnerItems.length + 1);
-            dinnerItems[0] = "Not Serving";
-            return dinnerItems;
-        }
-        for (int i = 0; i < dinner.length(); i++) {
-            JSONArray items = dinner.getJSONObject(i).getJSONArray("Items");
-            for (int x = 0; x < items.length(); x++) {
-                dinnerItems = Arrays.copyOf(dinnerItems,dinnerItems.length + 1);
-                dinnerItems[numitems] = items.getJSONObject(x).getString("Name");
-                numitems++;
+        try {
+            String[] dinnerItems = new String[0];
+            int numitems = 0;
+            JSONArray dinner = menu.getJSONArray("Dinner");
+            if (dinner == null || dinner.length() == 0) {
+                dinnerItems = Arrays.copyOf(dinnerItems, dinnerItems.length + 1);
+                dinnerItems[0] = "Not Serving";
+                return dinnerItems;
             }
+            for (int i = 0; i < dinner.length(); i++) {
+                JSONArray items = dinner.getJSONObject(i).getJSONArray("Items");
+                for (int x = 0; x < items.length(); x++) {
+                    dinnerItems = Arrays.copyOf(dinnerItems, dinnerItems.length + 1);
+                    dinnerItems[numitems] = items.getJSONObject(x).getString("Name");
+                    numitems++;
+                }
+            }
+            return dinnerItems;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
         }
-        return dinnerItems;
     }
 
     public boolean contains(String food, String[] meal) {

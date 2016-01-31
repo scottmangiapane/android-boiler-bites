@@ -1,3 +1,5 @@
+package com.cactuslabs.boilerbites;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +30,9 @@ public class Wiley extends DiningCourt {
             return menu;
         }
         catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }catch (JSONException e){
             e.printStackTrace();
             return null;
         }

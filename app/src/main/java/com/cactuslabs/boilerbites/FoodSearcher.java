@@ -1,6 +1,4 @@
-/**
- * Created by Matthew on 1/29/2016.
- */
+package com.cactuslabs.boilerbites;
 public class FoodSearcher {
     Earhart earhart = new Earhart();
     Windsor windsor = new Windsor();

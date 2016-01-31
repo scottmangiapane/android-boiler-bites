@@ -1,3 +1,5 @@
+package com.cactuslabs.boilerbites;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
@@ -11,6 +13,7 @@ public class Hillenbrand extends DiningCourt {
     public Hillenbrand() {
         super();
     }
+
     public JSONObject getMenu() {
         try {
             Date dNow = new Date();
@@ -28,6 +31,9 @@ public class Hillenbrand extends DiningCourt {
             return menu;
         }
         catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }catch (JSONException e){
             e.printStackTrace();
             return null;
         }

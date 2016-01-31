@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BoilerBites.iml" filepath="$PROJECT_DIR$/BoilerBites.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-boilerbites.iml" filepath="$PROJECT_DIR$/android-boilerbites.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

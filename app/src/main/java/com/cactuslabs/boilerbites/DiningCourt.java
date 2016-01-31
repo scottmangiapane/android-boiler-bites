@@ -1,17 +1,105 @@
-package com.cactuslabs.boilerbites;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Arrays;
 
-public interface DiningCourt {
-    public JSONObject getMenu();
+public abstract class DiningCourt {
+    private JSONObject menu;
 
-    public String[] getBreakfastItems();
+    public DiningCourt(){
+        this.menu = getMenu();
+    }
 
-    public String[] getLunchItems();
+    public abstract JSONObject getMenu();
+    public String[] getBreakfastItems() {
+        String [] breakfastItems = new String[0];
+        int numitems = 0;
+        JSONArray breakfast = menu.getJSONArray("Breakfast");
+        if (breakfast == null || breakfast.length() == 0){
+            breakfastItems = Arrays.copyOf(breakfastItems, breakfastItems.length + 1);
+            breakfastItems[0] = "Not Serving";
+            return breakfastItems;
+        }
+        for (int i = 0; i < breakfast.length(); i++) {
+            JSONArray items = breakfast.getJSONObject(i).getJSONArray("Items");
+            for (int x = 0; x < items.length(); x++) {
+                breakfastItems = Arrays.copyOf(breakfastItems, breakfastItems.length + 1);
+                breakfastItems[numitems] = items.getJSONObject(x).getString("Name");
+                numitems++;
+            }
+        }
+        return breakfastItems;
+    }
 
-    public String[] getDinnerItems();
+    public String[] getLunchItems() {
+        String [] lunchItems = new String[0];
+        int numitems = 0;
+        JSONArray lunch = menu.getJSONArray("Lunch");
+        if (lunch == null || lunch.length() == 0){
+            lunchItems = Arrays.copyOf(lunchItems,lunchItems.length + 1);
+            lunchItems[0] = "Not Serving";
+            return lunchItems;
+        }
+        for (int i = 0; i < lunch.length(); i++) {
+            JSONArray items = lunch.getJSONObject(i).getJSONArray("Items");
+            for (int x = 0; x < items.length(); x++) {
+                lunchItems = Arrays.copyOf(lunchItems, lunchItems.length + 1);
+                lunchItems[numitems] = items.getJSONObject(x).getString("Name");
+                numitems++;
+            }
+        }
+        return lunchItems;
+    }
 
-    public boolean contains(String food, String[] meal);
+    public String[] getDinnerItems() {
+        String [] dinnerItems = new String[0];
+        int numitems = 0;
+        JSONArray dinner = menu.getJSONArray("Dinner");
+        if (dinner == null || dinner.length() == 0){
+            dinnerItems = Arrays.copyOf(dinnerItems,dinnerItems.length + 1);
+            dinnerItems[0] = "Not Serving";
+            return dinnerItems;
+        }
+        for (int i = 0; i < dinner.length(); i++) {
+            JSONArray items = dinner.getJSONObject(i).getJSONArray("Items");
+            for (int x = 0; x < items.length(); x++) {
+                dinnerItems = Arrays.copyOf(dinnerItems,dinnerItems.length + 1);
+                dinnerItems[numitems] = items.getJSONObject(x).getString("Name");
+                numitems++;
+            }
+        }
+        return dinnerItems;
+    }
 
-    public String[] containsKeyword(String keyword, String[] meal);
+    public boolean contains(String food, String[] meal) {
+        food = food.trim();
+        if (meal == null ){
+            return false;
+        }
+        for (int x = 0; x < meal.length; x++){
+            if (meal[x].equalsIgnoreCase(food)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public String[] containsKeyword(String keyword, String[] meal){
+        if (keyword.equals("")){
+            return new String[0];
+        }
+        keyword = keyword.trim();
+        keyword = keyword.toLowerCase();
+        String [] keywordsarray = new String [0];
+        int numitems = 0;
+        if (meal == null ){
+            return new String[0];
+        }
+        for (int x = 0; x < meal.length; x++){
+            if (meal[x].toLowerCase().contains(keyword)){
+                keywordsarray = Arrays.copyOf(keywordsarray, keywordsarray.length +1);
+                keywordsarray[numitems] = meal[x];
+                numitems++;
+            }
+        }
+        return keywordsarray;
+    }
 }

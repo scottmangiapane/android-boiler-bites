@@ -1,17 +1,55 @@
 package com.cactuslabs.boilerbites;
+import android.os.AsyncTask;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.Arrays;
 
-public abstract class DiningCourt {
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public abstract class DiningCourt extends AsyncTask <String,String,String> {
     private JSONObject menu;
 
     public DiningCourt(){
-        this.menu = getMenu();
+        getMenu();
     }
 
-    public abstract JSONObject getMenu();
+    public abstract void getMenu();
+
+    @Override
+    protected String doInBackground(String... url) {
+        try {
+            URL website = new URL(url[0]);
+            Scanner sc = new Scanner(website.openStream());
+            String menuData = "";
+            while (sc.hasNext()) {
+                menuData = menuData + " " + sc.next();
+            }
+            return menuData;
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @Override
+    protected void onPostExecute(String result) {
+        try {
+            super.onPostExecute(result);
+            JSONObject menu = new JSONObject(result);
+            this.menu = menu;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return;
+        }
+    }
+
 
     public String[] getBreakfastItems() {
         try {

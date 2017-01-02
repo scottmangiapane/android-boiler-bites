@@ -1,5 +1,6 @@
 package com.cactuslabs.boilerbites;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,6 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.overview_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         new OverviewView(this);
     }
 
@@ -30,8 +30,8 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
+            case R.id.edit_icon:
+                startActivity(new Intent(this, EditActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -48,7 +48,7 @@ public class OverviewActivity extends AppCompatActivity {
             this.overviewBreakfast = (TextView) activity.findViewById(R.id.overview_breakfast);
             this.overviewLunch = (TextView) activity.findViewById(R.id.overview_lunch);
             this.overviewDinner = (TextView) activity.findViewById(R.id.overview_dinner);
-            FoodSearcher foodSearcher = new FoodSearcher();
+            /*FoodSearcher foodSearcher = new FoodSearcher();
             String output = "";
             for (String food : keywords) {
                 LinkedList<String> breakfastCourts = foodSearcher.searchDiningCourts(1, food);
@@ -66,7 +66,7 @@ public class OverviewActivity extends AppCompatActivity {
                 LinkedList<String> dinnerCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + dinnerCourts.toString() + "\n";
             }
-            overviewDinner.setText(output);
+            overviewDinner.setText(output);*/
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.cactuslabs.boilerbites;
 
-import java.util.LinkedList;
-
-public class FoodSearcher {
+/*public class FoodSearcher {
     private DiningCourt[] diningCourts = {
             new DiningCourt("Earhart"),
             new DiningCourt("Ford"),
@@ -31,3 +29,4 @@ public class FoodSearcher {
         return data;
     }
 }
+*/

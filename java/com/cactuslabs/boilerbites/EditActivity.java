@@ -28,7 +28,8 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.edit_toolbar));
-        new MainView(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        new EditView(this);
     }
 
     @Override
@@ -41,15 +42,14 @@ public class EditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.overview:
-                Intent i = new Intent(this, OverviewActivity.class);
-                startActivity(i);
+            case R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private static class MainView {
+    private static class EditView {
         private Button addButton;
         private List<ListItem> items;
         private ListAdapter adapter;
@@ -57,7 +57,7 @@ public class EditActivity extends AppCompatActivity {
         private TextView splashText;
         private TextView addTextView;
 
-        public MainView(final EditActivity activity) {
+        public EditView(final EditActivity activity) {
             this.addButton = (Button) activity.findViewById(R.id.add_button);
             this.items = new ArrayList<>();
             this.adapter = new ListAdapter(activity, items);

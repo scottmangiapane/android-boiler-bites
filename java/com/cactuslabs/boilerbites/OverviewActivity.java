@@ -38,31 +38,35 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private class OverviewView {
-        private OverviewActivity activity;
         private LinkedList<String> keywords;
-        private TextView overviewTextView;
+        private TextView overviewBreakfast;
+        private TextView overviewLunch;
+        private TextView overviewDinner;
 
         public OverviewView(OverviewActivity activity) {
-            this.activity = activity;
             this.keywords = (new DataUtil(activity)).getData();
-            this.overviewTextView = (TextView) activity.findViewById(R.id.overview_text);
+            this.overviewBreakfast = (TextView) activity.findViewById(R.id.overview_breakfast);
+            this.overviewLunch = (TextView) activity.findViewById(R.id.overview_lunch);
+            this.overviewDinner = (TextView) activity.findViewById(R.id.overview_dinner);
             FoodSearcher foodSearcher = new FoodSearcher();
-            String output = "Breakfast:\n";
+            String output = "";
             for (String food : keywords) {
                 LinkedList<String> breakfastCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + breakfastCourts.toString() + "\n";
             }
-            output += "Lunch:\n";
+            overviewBreakfast.setText(output);
+            output = "";
             for (String food : keywords) {
                 LinkedList<String> lunchCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + lunchCourts.toString() + "\n";
             }
-            output += "Dinner:\n";
+            overviewLunch.setText(output);
+            output = "";
             for (String food : keywords) {
                 LinkedList<String> dinnerCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + dinnerCourts.toString() + "\n";
             }
-            overviewTextView.setText(output);
+            overviewDinner.setText(output);
         }
     }
 }

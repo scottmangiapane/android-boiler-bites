@@ -14,52 +14,63 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:paddingBottom="@dimen/margin_half"
-        android:paddingLeft="@dimen/margin"
-        android:paddingRight="@dimen/margin"
-        android:paddingTop="@dimen/margin_half"
-        android:text="Breakfast:" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/overview_breakfast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:paddingBottom="@dimen/margin_half"
-        android:paddingLeft="@dimen/margin"
-        android:paddingRight="@dimen/margin"
-        android:paddingTop="@dimen/margin_half"
-        android:text="Lunch:" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="@dimen/margin_half"
+                android:paddingLeft="@dimen/margin"
+                android:paddingRight="@dimen/margin"
+                android:paddingTop="@dimen/margin_half"
+                android:text="Breakfast:" />
 
-    <TextView
-        android:id="@+id/overview_lunch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin" />
+            <TextView
+                android:id="@+id/overview_breakfast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:paddingBottom="@dimen/margin_half"
-        android:paddingLeft="@dimen/margin"
-        android:paddingRight="@dimen/margin"
-        android:paddingTop="@dimen/margin_half"
-        android:text="Dinner:" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="@dimen/margin_half"
+                android:paddingLeft="@dimen/margin"
+                android:paddingRight="@dimen/margin"
+                android:paddingTop="@dimen/margin_half"
+                android:text="Lunch:" />
 
-    <TextView
-        android:id="@+id/overview_dinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin" />
+            <TextView
+                android:id="@+id/overview_lunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="@dimen/margin_half"
+                android:paddingLeft="@dimen/margin"
+                android:paddingRight="@dimen/margin"
+                android:paddingTop="@dimen/margin_half"
+                android:text="Dinner:" />
+
+            <TextView
+                android:id="@+id/overview_dinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

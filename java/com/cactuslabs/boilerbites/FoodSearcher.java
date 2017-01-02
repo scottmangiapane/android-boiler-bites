@@ -1,6 +1,8 @@
 package com.cactuslabs.boilerbites;
 
-/*public class FoodSearcher {
+import java.util.LinkedList;
+
+public class FoodSearcher {
     private DiningCourt[] diningCourts = {
             new DiningCourt("Earhart"),
             new DiningCourt("Ford"),
@@ -29,4 +31,3 @@ package com.cactuslabs.boilerbites;
         return data;
     }
 }
-*/

@@ -48,7 +48,7 @@ public class OverviewActivity extends AppCompatActivity {
             this.overviewBreakfast = (TextView) activity.findViewById(R.id.overview_breakfast);
             this.overviewLunch = (TextView) activity.findViewById(R.id.overview_lunch);
             this.overviewDinner = (TextView) activity.findViewById(R.id.overview_dinner);
-            /*FoodSearcher foodSearcher = new FoodSearcher();
+            FoodSearcher foodSearcher = new FoodSearcher();
             String output = "";
             for (String food : keywords) {
                 LinkedList<String> breakfastCourts = foodSearcher.searchDiningCourts(1, food);
@@ -66,7 +66,7 @@ public class OverviewActivity extends AppCompatActivity {
                 LinkedList<String> dinnerCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + dinnerCourts.toString() + "\n";
             }
-            overviewDinner.setText(output);*/
+            overviewDinner.setText(output);
         }
     }
 }

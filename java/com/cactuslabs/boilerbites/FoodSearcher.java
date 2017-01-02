@@ -1,69 +1,33 @@
 package com.cactuslabs.boilerbites;
 
+import java.util.LinkedList;
+
 public class FoodSearcher {
-    DiningCourt earhart = new DiningCourt("Earhart");
-    DiningCourt ford = new DiningCourt("Ford");
-    DiningCourt hillenbrand = new DiningCourt("Hillenbrand");
-    DiningCourt wiley = new DiningCourt("Wiley");
-    DiningCourt windsor = new DiningCourt("Windsor");
+    private DiningCourt[] diningCourts = {
+            new DiningCourt("Earhart"),
+            new DiningCourt("Ford"),
+            new DiningCourt("Hillenbrand"),
+            new DiningCourt("Wiley"),
+            new DiningCourt("Windsor"),
+    };
 
-    public String getBreakfastCourts(String food) {
-        String diningCourts = "";
-        if (earhart.contains(food, earhart.getBreakfastItems()))
-            diningCourts = diningCourts + "Earhart,";
-        if (windsor.contains(food, windsor.getBreakfastItems()))
-            diningCourts = diningCourts + "Windsor,";
-        if (ford.contains(food, ford.getBreakfastItems()))
-            diningCourts = diningCourts + "Ford,";
-        if (wiley.contains(food, wiley.getBreakfastItems()))
-            diningCourts = diningCourts + "Wiley,";
-        if (hillenbrand.contains(food, hillenbrand.getBreakfastItems()))
-            diningCourts = diningCourts + "Hillenbrand,";
-        if (diningCourts.equals(""))
-            return null;
-        else {
-            diningCourts = diningCourts.substring(0, diningCourts.length() - 1);
-            return diningCourts;
-        }
-    }
-
-    public String getLunchCourts(String food) {
-        String diningCourts = "";
-        if (earhart.contains(food, earhart.getLunchItems()))
-            diningCourts = diningCourts + "Earhart,";
-        if (windsor.contains(food, windsor.getLunchItems()))
-            diningCourts = diningCourts + "Windsor,";
-        if (ford.contains(food, ford.getLunchItems()))
-            diningCourts = diningCourts + "Ford,";
-        if (wiley.contains(food, wiley.getLunchItems()))
-            diningCourts = diningCourts + "Wiley,";
-        if (hillenbrand.contains(food, hillenbrand.getLunchItems()))
-            diningCourts = diningCourts + "Hillenbrand,";
-        if (diningCourts.equals(""))
-            return null;
-        else {
-            diningCourts = diningCourts.substring(0, diningCourts.length() - 1);
-            return diningCourts;
-        }
-    }
-
-    public String getDinnerCourts(String food) {
-        String diningCourts = "";
-        if (wiley.contains(food, wiley.getDinnerItems()))
-            diningCourts = diningCourts + "Wiley,";
-        if (ford.contains(food, ford.getDinnerItems()))
-            diningCourts = diningCourts + "Ford,";
-        if (windsor.contains(food, windsor.getDinnerItems()))
-            diningCourts = diningCourts + "Windsor,";
-        if (earhart.contains(food, earhart.getDinnerItems()))
-            diningCourts = diningCourts + "Earhart,";
-        if (hillenbrand.contains(food, hillenbrand.getDinnerItems()))
-            diningCourts = diningCourts + "Hillenbrand,";
-        if (diningCourts.equals(""))
-            return null;
-        else {
-            diningCourts = diningCourts.substring(0, diningCourts.length() - 1);
-            return diningCourts;
-        }
+    public LinkedList<String> searchDiningCourts(int meal, String food) {
+        LinkedList<String> data = new LinkedList<>();
+        for (DiningCourt dc : diningCourts)
+            switch (meal) {
+                case 1:
+                    if (dc.contains(food, dc.getBreakfastItems()))
+                        data.add(dc.getName());
+                    break;
+                case 2:
+                    if (dc.contains(food, dc.getLunchItems()))
+                        data.add(dc.getName());
+                    break;
+                case 3:
+                    if (dc.contains(food, dc.getDinnerItems()))
+                        data.add(dc.getName());
+                    break;
+            }
+        return data;
     }
 }

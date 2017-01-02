@@ -22,6 +22,10 @@ public class DiningCourt extends AsyncTask<String, String, String> {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void getMenu() {
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("MM-dd-yyyy");

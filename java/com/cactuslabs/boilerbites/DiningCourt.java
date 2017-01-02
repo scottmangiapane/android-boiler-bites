@@ -9,17 +9,26 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
-public abstract class DiningCourt extends AsyncTask<String, String, String> {
+public class DiningCourt extends AsyncTask<String, String, String> {
     private JSONObject menu;
+    private String name;
 
-    public DiningCourt() {
-        getMenu();
+    public DiningCourt(String name) {
+        this.name = name;
     }
 
-    public abstract void getMenu();
+    public void getMenu() {
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("MM-dd-yyyy");
+        String date = ft.format(dNow);
+        String url = "http://api.hfs.purdue.edu/menus/v1/locations/" + name + "/" + date;
+        execute(url);
+    }
 
     @Override
     protected String doInBackground(String... url) {

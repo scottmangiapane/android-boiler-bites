@@ -12,7 +12,7 @@ public class ListDivider extends RecyclerView.ItemDecoration {
     private Drawable divider;
 
     public ListDivider(Context context) {
-        final TypedArray styledAttributes = context.obtainStyledAttributes(new int[]{android.R.attr.listDivider});
+        TypedArray styledAttributes = context.obtainStyledAttributes(new int[]{android.R.attr.listDivider});
         divider = styledAttributes.getDrawable(0);
         styledAttributes.recycle();
     }
@@ -30,7 +30,7 @@ public class ListDivider extends RecyclerView.ItemDecoration {
         int dividerLeft = parent.getPaddingLeft();
         int dividerRight = parent.getWidth() - parent.getPaddingRight();
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount - 1; i++) {
+        for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             int dividerTop = child.getBottom() + params.bottomMargin;

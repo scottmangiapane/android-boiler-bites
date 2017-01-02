@@ -31,16 +31,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EditActivity" />
         </activity>
-
-        <receiver
-            android:name=".AlarmReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".NotificationBuilder" />
     </application>
 
 </manifest>

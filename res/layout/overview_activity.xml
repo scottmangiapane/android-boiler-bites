@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/overview_bar"
+        android:id="@+id/overview_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimaryDark"
@@ -25,7 +25,7 @@
         android:text="Overview of today:" />
 
     <TextView
-        android:id="@+id/overview_text_view"
+        android:id="@+id/overview_text"
         style="@android:style/TextAppearance.Medium"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

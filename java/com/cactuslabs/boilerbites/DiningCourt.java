@@ -1,4 +1,5 @@
 package com.cactuslabs.boilerbites;
+
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -11,10 +12,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public abstract class DiningCourt extends AsyncTask <String,String,String> {
+public abstract class DiningCourt extends AsyncTask<String, String, String> {
     private JSONObject menu;
 
-    public DiningCourt(){
+    public DiningCourt() {
         getMenu();
     }
 
@@ -30,26 +31,26 @@ public abstract class DiningCourt extends AsyncTask <String,String,String> {
                 menuData = menuData + " " + sc.next();
             }
             return menuData;
-        }catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
+
     @Override
     protected void onPostExecute(String result) {
         try {
             super.onPostExecute(result);
             JSONObject menu = new JSONObject(result);
             this.menu = menu;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return;
         }
     }
-
 
     public String[] getBreakfastItems() {
         try {
@@ -70,7 +71,7 @@ public abstract class DiningCourt extends AsyncTask <String,String,String> {
                 }
             }
             return breakfastItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -95,7 +96,7 @@ public abstract class DiningCourt extends AsyncTask <String,String,String> {
                 }
             }
             return lunchItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -120,7 +121,7 @@ public abstract class DiningCourt extends AsyncTask <String,String,String> {
                 }
             }
             return dinnerItems;
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
@@ -128,30 +129,31 @@ public abstract class DiningCourt extends AsyncTask <String,String,String> {
 
     public boolean contains(String food, String[] meal) {
         food = food.trim();
-        if (meal == null ){
+        if (meal == null) {
             return false;
         }
-        for (int x = 0; x < meal.length; x++){
-            if (meal[x].equalsIgnoreCase(food)){
+        for (int x = 0; x < meal.length; x++) {
+            if (meal[x].equalsIgnoreCase(food)) {
                 return true;
             }
         }
         return false;
     }
-    public String[] containsKeyword(String keyword, String[] meal){
-        if (keyword.equals("")){
+
+    public String[] containsKeyword(String keyword, String[] meal) {
+        if (keyword.equals("")) {
             return new String[0];
         }
         keyword = keyword.trim();
         keyword = keyword.toLowerCase();
-        String [] keywordsarray = new String [0];
+        String[] keywordsarray = new String[0];
         int numitems = 0;
-        if (meal == null ){
+        if (meal == null) {
             return new String[0];
         }
-        for (int x = 0; x < meal.length; x++){
-            if (meal[x].toLowerCase().contains(keyword)){
-                keywordsarray = Arrays.copyOf(keywordsarray, keywordsarray.length +1);
+        for (int x = 0; x < meal.length; x++) {
+            if (meal[x].toLowerCase().contains(keyword)) {
+                keywordsarray = Arrays.copyOf(keywordsarray, keywordsarray.length + 1);
                 keywordsarray[numitems] = meal[x];
                 numitems++;
             }

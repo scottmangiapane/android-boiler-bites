@@ -7,9 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import java.util.LinkedList;
 
 public class OverviewActivity extends AppCompatActivity {
     @Override
@@ -38,17 +35,8 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private class OverviewView {
-        private LinkedList<String> keywords;
-        private TextView overviewBreakfast;
-        private TextView overviewLunch;
-        private TextView overviewDinner;
-
         public OverviewView(OverviewActivity activity) {
-            this.keywords = (new DataUtil(activity)).getData();
-            this.overviewBreakfast = (TextView) activity.findViewById(R.id.overview_breakfast);
-            this.overviewLunch = (TextView) activity.findViewById(R.id.overview_lunch);
-            this.overviewDinner = (TextView) activity.findViewById(R.id.overview_dinner);
-            FoodSearcher foodSearcher = new FoodSearcher();
+            /*FoodSearcher foodSearcher = new FoodSearcher();
             String output = "";
             for (String food : keywords) {
                 LinkedList<String> breakfastCourts = foodSearcher.searchDiningCourts(1, food);
@@ -66,7 +54,14 @@ public class OverviewActivity extends AppCompatActivity {
                 LinkedList<String> dinnerCourts = foodSearcher.searchDiningCourts(1, food);
                 output += "\t" + food + "at " + dinnerCourts.toString() + "\n";
             }
-            overviewDinner.setText(output);
+            overviewDinner.setText(output);*/
+
+            /*WebScraper webScraper = new WebScraper(activity);
+            String[] diningCourts = webScraper.getDiningCourts();
+            for (String diningCourt : diningCourts)
+                webScraper.getMenu(diningCourt);*/
+
+            new WebScraper(activity, "Earhart");
         }
     }
 }

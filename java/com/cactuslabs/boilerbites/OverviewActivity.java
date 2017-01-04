@@ -42,36 +42,34 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     public void loadData(JSONObject[] data) {
-        TextView overviewBreakfast = (TextView) findViewById(R.id.overview_breakfast);
-        TextView overviewLunch = (TextView) findViewById(R.id.overview_lunch);
-        TextView overviewDinner = (TextView) findViewById(R.id.overview_dinner);
-
         String breakfastText = "";
         String lunchText = "";
         String dinnerText = "";
-
-        String diningCourt = "<temp>";
-
+        DataUtil dataUtil = new DataUtil(this);
         ParseJSON parser = new ParseJSON();
-
         try {
             for (JSONObject json : data) {
                 LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
                 for (String item : breakfast)
-                    breakfastText += item + " at " + diningCourt + "\n";
+                    if (dataUtil.isItem(item))
+                        breakfastText += item + " at " + json.getString("Location") + "\n";
                 LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
                 for (String item : lunch)
-                    lunchText += item + " at " + diningCourt + "\n";
+                    if (dataUtil.isItem(item))
+                        lunchText += item + " at " + json.getString("Location") + "\n";
                 LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
                 for (String item : dinner)
-                    dinnerText += item + " at " + diningCourt + "\n";
+                    if (dataUtil.isItem(item))
+                        dinnerText += item + " at " + json.getString("Location") + "\n";
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        overviewBreakfast.setText(breakfastText);
-        overviewLunch.setText(lunchText);
-        overviewDinner.setText(dinnerText);
+        if (breakfastText.length() > 0)
+            ((TextView) findViewById(R.id.overview_breakfast)).setText(breakfastText);
+        if (lunchText.length() > 0)
+            ((TextView) findViewById(R.id.overview_lunch)).setText(lunchText);
+        if (dinnerText.length() > 0)
+            ((TextView) findViewById(R.id.overview_dinner)).setText(dinnerText);
     }
 }

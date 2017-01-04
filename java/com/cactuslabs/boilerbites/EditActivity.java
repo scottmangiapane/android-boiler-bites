@@ -60,7 +60,7 @@ public class EditActivity extends AppCompatActivity {
         public EditView(final EditActivity activity) {
             this.addButton = (Button) activity.findViewById(R.id.add_button);
             this.items = new ArrayList<>();
-            this.adapter = new ListAdapter(activity, items);
+            this.adapter = new ListAdapter(items);
             this.recyclerView = (RecyclerView) activity.findViewById(R.id.keyword_list);
             this.splashText = (TextView) activity.findViewById(R.id.splash_text);
             this.addTextView = (TextView) activity.findViewById(R.id.add_textbox);

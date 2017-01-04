@@ -1,6 +1,5 @@
 package com.cactuslabs.boilerbites;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,9 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private Context context;
     private List<ListItem> list;
 
-    public ListAdapter(Context context, List<ListItem> list) {
-        this.context = context;
+    public ListAdapter(List<ListItem> list) {
         this.list = list;
     }
 

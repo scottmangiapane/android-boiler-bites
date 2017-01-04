@@ -44,8 +44,11 @@ public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
         try {
             JSONArray locations = new JSONArray(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"));
             data = new JSONObject[locations.length()];
-            for (int i = 0; i < locations.length(); i++)
-                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v1/locations/" + locations.getString(i).replace(" ", "%20") + "/" + "02-03-2016"));
+            for (int i = 0; i < locations.length(); i++) {
+                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"
+                        + locations.getString(i).replace(" ", "%20") + "/" + "02-03-2016")); // TODO: change to 'date'
+                data[i].put("Location", locations.get(i));
+            }
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +62,7 @@ public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
         activity.loadData(data);
     }
 
-    String fetch(String url) throws JSONException, IOException {
+    private String fetch(String url) throws JSONException, IOException {
         StringBuilder builder = new StringBuilder();
         urlConnection = (HttpURLConnection) (new URL(url)).openConnection();
         InputStream input = new BufferedInputStream(urlConnection.getInputStream());

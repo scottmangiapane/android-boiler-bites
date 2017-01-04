@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".EditActivity"
-            android:label="Edit"
+            android:label="Edit Favorites"
             android:parentActivityName=".OverviewActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

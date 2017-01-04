@@ -29,6 +29,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.edit_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.edit_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         new EditView(this);
     }
 
@@ -41,11 +42,8 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                finish();
-                return true;
-        }
+        if (item.getItemId() == R.id.home)
+            finish();
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Other">
+        <Preference
+            android:key="pref_rate"
+            android:summary="Share your opinion on the Google Play store."
+            android:title="Rate BoilerBites" />
+    </PreferenceCategory>
+</PreferenceScreen>

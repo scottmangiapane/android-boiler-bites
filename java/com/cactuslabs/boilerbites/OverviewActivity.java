@@ -37,6 +37,9 @@ public class OverviewActivity extends AppCompatActivity {
             case R.id.edit_icon:
                 startActivity(new Intent(this, EditActivity.class));
                 return true;
+            case R.id.settings_icon:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -52,15 +55,15 @@ public class OverviewActivity extends AppCompatActivity {
                 LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
                 for (String item : breakfast)
                     if (dataUtil.isItem(item))
-                        breakfastText += item + " at " + json.getString("Location") + "\n";
+                        breakfastText += json.getString("Location") + ": " + item + "\n";
                 LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
                 for (String item : lunch)
                     if (dataUtil.isItem(item))
-                        lunchText += item + " at " + json.getString("Location") + "\n";
+                        lunchText += json.getString("Location") + ": " + item + "\n";
                 LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
                 for (String item : dinner)
                     if (dataUtil.isItem(item))
-                        dinnerText += item + " at " + json.getString("Location") + "\n";
+                        dinnerText += json.getString("Location") + ": " + item + "\n";
             }
         } catch (JSONException e) {
             e.printStackTrace();

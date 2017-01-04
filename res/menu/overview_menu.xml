@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:title="Edit"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/settings_icon"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Settings"
+        app:showAsAction="always" />
 </menu>

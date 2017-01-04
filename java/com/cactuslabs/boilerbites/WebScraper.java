@@ -60,7 +60,6 @@ public class WebScraper extends AsyncTask<String, String, String> {
         StringBuilder result = new StringBuilder();
         try {
             urlConnection = (HttpURLConnection) (new URL(args[0])).openConnection();
-            //urlConnection.setRequestProperty("accept", "application/xml");
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line;
@@ -84,8 +83,23 @@ public class WebScraper extends AsyncTask<String, String, String> {
                 for (int i = 0; i < json.length(); i++)
                     new WebScraper(activity, json.getString(i).replace(" ", "%20"));
             } else {
+                String breakfastText = String.valueOf(overviewBreakfast.getText());
+                String lunchText = String.valueOf(overviewLunch.getText());
+                String dinnerText = String.valueOf(overviewDinner.getText());
+                ParseJSON parser = new ParseJSON();
                 JSONObject json = new JSONObject(data);
-                // // TODO: 1/3/17 iterate over json, and return data back to OverviewActivity 
+                LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
+                for (String item : breakfast)
+                    breakfastText += item + " at " + diningCourt + "\n";
+                LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
+                for (String item : lunch)
+                    lunchText += item + " at " + diningCourt + "\n";
+                LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
+                for (String item : dinner)
+                    dinnerText += item + " at " + diningCourt + "\n";
+                overviewBreakfast.setText(breakfastText);
+                overviewLunch.setText(lunchText);
+                overviewDinner.setText(dinnerText);
             }
         } catch (JSONException e) {
             e.printStackTrace();

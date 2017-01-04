@@ -25,7 +25,7 @@ Tired of checking each dining court individually to see which has the best food?
 
 ## Dependencies
 
-In the project's `/app/build.gradle` file, add the following dependency.
+In the project's `/app/build.gradle` file, add the following dependencies.
 ```groovy
 dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'

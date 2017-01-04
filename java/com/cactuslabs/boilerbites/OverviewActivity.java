@@ -36,32 +36,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     private class OverviewView {
         public OverviewView(OverviewActivity activity) {
-            /*FoodSearcher foodSearcher = new FoodSearcher();
-            String output = "";
-            for (String food : keywords) {
-                LinkedList<String> breakfastCourts = foodSearcher.searchDiningCourts(1, food);
-                output += "\t" + food + "at " + breakfastCourts.toString() + "\n";
-            }
-            overviewBreakfast.setText(output);
-            output = "";
-            for (String food : keywords) {
-                LinkedList<String> lunchCourts = foodSearcher.searchDiningCourts(1, food);
-                output += "\t" + food + "at " + lunchCourts.toString() + "\n";
-            }
-            overviewLunch.setText(output);
-            output = "";
-            for (String food : keywords) {
-                LinkedList<String> dinnerCourts = foodSearcher.searchDiningCourts(1, food);
-                output += "\t" + food + "at " + dinnerCourts.toString() + "\n";
-            }
-            overviewDinner.setText(output);*/
-
-            /*WebScraper webScraper = new WebScraper(activity);
-            String[] diningCourts = webScraper.getDiningCourts();
-            for (String diningCourt : diningCourts)
-                webScraper.getMenu(diningCourt);*/
-
-            new WebScraper(activity, "Earhart");
+            new WebScraper(activity, null);
         }
     }
 }

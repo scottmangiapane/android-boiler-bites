@@ -46,7 +46,7 @@ public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
             data = new JSONObject[locations.length()];
             for (int i = 0; i < locations.length(); i++) {
                 data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"
-                        + locations.getString(i).replace(" ", "%20") + "/" + "02-03-2016")); // TODO: change to 'date'
+                        + locations.getString(i).replace(" ", "%20") + "/" + "02-05-2016")); // TODO: change to 'date'
                 data[i].put("Location", locations.get(i));
             }
         } catch (JSONException | IOException e) {

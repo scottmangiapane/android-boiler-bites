@@ -2,7 +2,6 @@ package com.cactuslabs.boilerbites;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,39 +9,24 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Locale;
 
-public class WebScraper extends AsyncTask<String, String, String> {
+public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
     private HttpURLConnection urlConnection;
-    private LinkedList<String> keywords;
     private OverviewActivity activity;
     private ProgressDialog dialog;
-    private String diningCourt;
-    private TextView overviewBreakfast;
-    private TextView overviewLunch;
-    private TextView overviewDinner;
+    private String date;
 
-    public WebScraper(OverviewActivity activity, String diningCourt) {
-        this.keywords = (new DataUtil(activity)).getData();
+    public WebScraper(OverviewActivity activity) {
         this.activity = activity;
-        this.diningCourt = diningCourt;
-        this.overviewBreakfast = (TextView) activity.findViewById(R.id.overview_breakfast);
-        this.overviewLunch = (TextView) activity.findViewById(R.id.overview_lunch);
-        this.overviewDinner = (TextView) activity.findViewById(R.id.overview_dinner);
-        if (diningCourt == null)
-            execute("https://api.hfs.purdue.edu/menus/v1/locations/");
-        else {
-            String date = (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
-            String url = "https://api.hfs.purdue.edu/menus/v1/locations/" + diningCourt + "/" + "02-03-2016";//date;
-            execute(url);
-        }
+        date = (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
     }
 
     @Override
@@ -51,58 +35,39 @@ public class WebScraper extends AsyncTask<String, String, String> {
         dialog.setCancelable(false);
         dialog.setIndeterminate(true);
         dialog.setMessage("Please wait...");
-        if (diningCourt == null)
-            dialog.show();
+        dialog.show();
     }
 
     @Override
-    protected String doInBackground(String... args) {
-        StringBuilder result = new StringBuilder();
+    protected JSONObject[] doInBackground(String... args) {
+        JSONObject[] data = null;
         try {
-            urlConnection = (HttpURLConnection) (new URL(args[0])).openConnection();
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = reader.readLine()) != null)
-                result.append(line);
-        } catch (Exception e) {
+            JSONArray locations = new JSONArray(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"));
+            data = new JSONObject[locations.length()];
+            for (int i = 0; i < locations.length(); i++)
+                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v1/locations/" + locations.getString(i).replace(" ", "%20") + "/" + "02-03-2016"));
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
-        } finally {
-            urlConnection.disconnect();
         }
-        return result.toString();
+        return data;
     }
 
     @Override
-    protected void onPostExecute(String data) {
+    protected void onPostExecute(JSONObject[] data) {
         if (dialog.isShowing())
             dialog.dismiss();
-        try {
-            if (diningCourt == null) {
-                JSONArray json = new JSONArray(data);
-                for (int i = 0; i < json.length(); i++)
-                    new WebScraper(activity, json.getString(i).replace(" ", "%20"));
-            } else {
-                String breakfastText = String.valueOf(overviewBreakfast.getText());
-                String lunchText = String.valueOf(overviewLunch.getText());
-                String dinnerText = String.valueOf(overviewDinner.getText());
-                ParseJSON parser = new ParseJSON();
-                JSONObject json = new JSONObject(data);
-                LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
-                for (String item : breakfast)
-                    breakfastText += item + " at " + diningCourt + "\n";
-                LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
-                for (String item : lunch)
-                    lunchText += item + " at " + diningCourt + "\n";
-                LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
-                for (String item : dinner)
-                    dinnerText += item + " at " + diningCourt + "\n";
-                overviewBreakfast.setText(breakfastText);
-                overviewLunch.setText(lunchText);
-                overviewDinner.setText(dinnerText);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        activity.loadData(data);
+    }
+
+    String fetch(String url) throws JSONException, IOException {
+        StringBuilder builder = new StringBuilder();
+        urlConnection = (HttpURLConnection) (new URL(url)).openConnection();
+        InputStream input = new BufferedInputStream(urlConnection.getInputStream());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        String line;
+        while ((line = reader.readLine()) != null)
+            builder.append(line);
+        urlConnection.disconnect();
+        return builder.toString();
     }
 }

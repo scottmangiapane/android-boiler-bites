@@ -7,6 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.LinkedList;
 
 public class OverviewActivity extends AppCompatActivity {
     @Override
@@ -14,7 +20,8 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_activity);
         setSupportActionBar((Toolbar) findViewById(R.id.overview_toolbar));
-        new OverviewView(this);
+        WebScraper webScraper = new WebScraper(this);
+        webScraper.execute();
     }
 
     @Override
@@ -34,9 +41,37 @@ public class OverviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class OverviewView {
-        public OverviewView(OverviewActivity activity) {
-            new WebScraper(activity, null);
+    public void loadData(JSONObject[] data) {
+        TextView overviewBreakfast = (TextView) findViewById(R.id.overview_breakfast);
+        TextView overviewLunch = (TextView) findViewById(R.id.overview_lunch);
+        TextView overviewDinner = (TextView) findViewById(R.id.overview_dinner);
+
+        String breakfastText = "";
+        String lunchText = "";
+        String dinnerText = "";
+
+        String diningCourt = "<temp>";
+
+        ParseJSON parser = new ParseJSON();
+
+        try {
+            for (JSONObject json : data) {
+                LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
+                for (String item : breakfast)
+                    breakfastText += item + " at " + diningCourt + "\n";
+                LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
+                for (String item : lunch)
+                    lunchText += item + " at " + diningCourt + "\n";
+                LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
+                for (String item : dinner)
+                    dinnerText += item + " at " + diningCourt + "\n";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        overviewBreakfast.setText(breakfastText);
+        overviewLunch.setText(lunchText);
+        overviewDinner.setText(dinnerText);
     }
 }

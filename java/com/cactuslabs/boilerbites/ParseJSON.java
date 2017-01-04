@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class ParseJSON {
     public LinkedList<String> parseMenu(JSONArray menu) {
         LinkedList<String> list = new LinkedList<>();
-        for (int i = 0; i < menu.length(); i++) {
+        for (int i = 0; i < menu.length(); i++)
             try {
                 JSONArray items = menu.getJSONObject(i).getJSONArray("Items");
                 for (int j = 0; j < items.length(); j++)
@@ -16,7 +16,6 @@ public class ParseJSON {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
         return list;
     }
 }

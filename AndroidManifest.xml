@@ -30,6 +30,14 @@
                 android:value=".OverviewActivity" />
         </activity>
         <activity
+            android:name=".RawTextActivity"
+            android:label="Favorites"
+            android:parentActivityName=".OverviewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OverviewActivity" />
+        </activity>
+        <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".OverviewActivity">

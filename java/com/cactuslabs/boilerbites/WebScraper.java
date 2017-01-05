@@ -20,11 +20,11 @@ import java.util.Locale;
 
 public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
     private HttpURLConnection urlConnection;
-    private OverviewActivity activity;
+    private RawTextActivity activity;
     private ProgressDialog dialog;
     private String date;
 
-    public WebScraper(OverviewActivity activity) {
+    public WebScraper(RawTextActivity activity) {
         this.activity = activity;
         date = (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
     }

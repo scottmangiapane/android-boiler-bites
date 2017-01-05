@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,34 +46,26 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     public void loadData(JSONObject[] data) {
-        String breakfastText = "";
-        String lunchText = "";
-        String dinnerText = "";
         DataUtil dataUtil = new DataUtil(this);
         ParseJSON parser = new ParseJSON();
+        String text = "";
         try {
-            for (JSONObject json : data) {
-                LinkedList<String> breakfast = parser.parseMenu(json.getJSONArray("Breakfast"));
-                for (String item : breakfast)
-                    if (dataUtil.isItem(item))
-                        breakfastText += json.getString("Location") + ": " + item + "\n";
-                LinkedList<String> lunch = parser.parseMenu(json.getJSONArray("Lunch"));
-                for (String item : lunch)
-                    if (dataUtil.isItem(item))
-                        lunchText += json.getString("Location") + ": " + item + "\n";
-                LinkedList<String> dinner = parser.parseMenu(json.getJSONArray("Dinner"));
-                for (String item : dinner)
-                    if (dataUtil.isItem(item))
-                        dinnerText += json.getString("Location") + ": " + item + "\n";
+            for (JSONObject diningCourt : data) {
+                text += diningCourt.getString("Location") + "\n";
+                JSONArray meals = diningCourt.getJSONArray("Meals");
+                for (int i = 0; i < meals.length(); i++) {
+                    JSONObject meal = meals.getJSONObject(i);
+                    text += "    " + meal.getString("Name") + "\n";
+                    LinkedList<String> mealItems = parser.parseMeal(meal);
+                    for (String item : mealItems)
+                        if (dataUtil.isItem(item))
+                            text += "        " + item + "\n";
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (breakfastText.length() > 0)
-            ((TextView) findViewById(R.id.overview_breakfast)).setText(breakfastText);
-        if (lunchText.length() > 0)
-            ((TextView) findViewById(R.id.overview_lunch)).setText(lunchText);
-        if (dinnerText.length() > 0)
-            ((TextView) findViewById(R.id.overview_dinner)).setText(dinnerText);
+        if (text.length() > 0)
+            ((TextView) findViewById(R.id.overview_text)).setText(text);
     }
 }

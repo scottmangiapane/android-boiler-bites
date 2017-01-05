@@ -40,15 +40,13 @@ public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
 
     @Override
     protected JSONObject[] doInBackground(String... args) {
-        JSONObject[] data = null;
+        JSONObject[] data = new JSONObject[0];
         try {
             JSONArray locations = new JSONArray(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"));
             data = new JSONObject[locations.length()];
-            for (int i = 0; i < locations.length(); i++) {
-                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"
-                        + locations.getString(i).replace(" ", "%20") + "/" + "02-05-2016")); // TODO: change to 'date'
-                data[i].put("Location", locations.get(i));
-            }
+            for (int i = 0; i < locations.length(); i++)
+                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v2/locations/"
+                        + locations.getString(i).replace(" ", "%20") + "/" + "12-06-2016")); // TODO: change to 'date'
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

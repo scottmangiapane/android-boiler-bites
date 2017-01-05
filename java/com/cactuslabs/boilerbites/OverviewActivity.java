@@ -54,12 +54,18 @@ public class OverviewActivity extends AppCompatActivity {
                 text += diningCourt.getString("Location") + "\n";
                 JSONArray meals = diningCourt.getJSONArray("Meals");
                 for (int i = 0; i < meals.length(); i++) {
-                    JSONObject meal = meals.getJSONObject(i);
-                    text += "    " + meal.getString("Name") + "\n";
-                    LinkedList<String> mealItems = parser.parseMeal(meal);
-                    for (String item : mealItems)
-                        if (dataUtil.isItem(item))
-                            text += "        " + item + "\n";
+                    try {
+                        JSONObject meal = meals.getJSONObject(i);
+                        String time = meal.getJSONObject("Hours").getString("StartTime") + " - "
+                                + meal.getJSONObject("Hours").getString("EndTime");
+                        text += "    " + meal.getString("Name") + " (" + time + ")" + "\n";
+                        LinkedList<String> mealItems = parser.parseMeal(meal);
+                        for (String item : mealItems)
+                            if (dataUtil.isItem(item))
+                                text += "        " + item + "\n";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (JSONException e) {

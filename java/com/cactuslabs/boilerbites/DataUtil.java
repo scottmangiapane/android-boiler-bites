@@ -4,18 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 
 public class DataUtil {
     private Context context;
+    private SharedPreferences.Editor editor;
     private LinkedList<String> list;
     private SharedPreferences sharedPreferences;
 
     public DataUtil(Context context) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences("app_data", Context.MODE_PRIVATE);
-        this.list = getData();
+        this.editor = sharedPreferences.edit();
+        this.list = getItems();
     }
 
     public boolean isEmpty() {
@@ -26,13 +32,13 @@ public class DataUtil {
         if (list.contains(item))
             list.remove(item);
         list.push(item);
-        setData(list);
+        setItems(list);
     }
 
     public void removeItem(String item) {
         if (list.contains(item))
             list.remove(item);
-        setData(list);
+        setItems(list);
     }
 
     public boolean isItem(String item) {
@@ -42,8 +48,7 @@ public class DataUtil {
         return false;
     }
 
-    public void setData(LinkedList<String> data) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public void setItems(LinkedList<String> data) {
         editor.putInt("size", data.size());
         for (int i = 0; i < data.size(); i++)
             editor.putString("item_" + i, data.get(i));
@@ -51,11 +56,38 @@ public class DataUtil {
         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("REFRESH_LIST"));
     }
 
-    public LinkedList<String> getData() {
+    public LinkedList<String> getItems() {
         int size = sharedPreferences.getInt("size", 0);
         LinkedList<String> newList = new LinkedList<>();
         for (int i = 0; i < size; i++)
             newList.add(sharedPreferences.getString("item_" + i, ""));
         return newList;
+    }
+
+    public void getCache(final MethodReference runner) {
+        Log.w("########", "Running getCache()");
+        String data = sharedPreferences.getString("cache", "");
+        Log.w("########", "Fetching cache in memory");
+        Log.w("########", data);
+        if (data.equals("")) {
+            new WebScraper(runner, new MethodReference() {
+                @Override
+                public void run(JSONObject data) {
+                    Log.w("########", "Storing new cache in memory");
+                    Log.w("########", data.toString());
+                    editor.putString("cache", data.toString());
+                    editor.commit();
+                }
+            });
+            return;
+        }
+        Log.w("########", "Cache found. Attempting to parse...");
+        JSONObject json = null;
+        try {
+            json = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        runner.run(json);
     }
 }

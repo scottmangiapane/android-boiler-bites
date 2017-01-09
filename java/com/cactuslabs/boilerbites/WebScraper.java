@@ -1,7 +1,7 @@
 package com.cactuslabs.boilerbites;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,50 +14,45 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
+public class WebScraper extends AsyncTask<String, String, JSONObject> {
     private HttpURLConnection urlConnection;
-    private RawTextActivity activity;
-    private ProgressDialog dialog;
+    private MethodReference[] methodReferences;
     private String date;
 
-    public WebScraper(RawTextActivity activity) {
-        this.activity = activity;
-        date = (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
+    public WebScraper(MethodReference... methodReferences) {
+        this.methodReferences = methodReferences;
+        this.date = "11-07-2016"; //(new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
+        Log.w("########", "You made a WebScraper!");
+        this.execute();
     }
 
     @Override
-    protected void onPreExecute() {
-        dialog = new ProgressDialog(activity);
-        dialog.setCancelable(false);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("Please wait...");
-        dialog.show();
-    }
-
-    @Override
-    protected JSONObject[] doInBackground(String... args) {
-        JSONObject[] data = new JSONObject[0];
+    protected JSONObject doInBackground(String... args) {
+        Log.w("########", "The WebScraper starts to do things...");
+        JSONObject data = new JSONObject();
         try {
             JSONArray locations = new JSONArray(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"));
-            data = new JSONObject[locations.length()];
-            for (int i = 0; i < locations.length(); i++)
-                data[i] = new JSONObject(fetch("https://api.hfs.purdue.edu/menus/v2/locations/"
-                        + locations.getString(i).replace(" ", "%20") + "/" + "11-07-2016")); // TODO: change to 'date'
+            for (int i = 0; i < locations.length(); i++) {
+                String url = "https://api.hfs.purdue.edu/menus/v2/locations/"
+                        + locations.getString(i).replace(" ", "%20") + "/" + date;
+                JSONObject diningCourt = new JSONObject(fetch(url));
+                data.put(locations.getString(i), diningCourt);
+            }
+            data.put("Locations", locations);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
+        Log.w("########", "The WebScraper finishes doing things...");
+        Log.w("########", data.toString());
         return data;
     }
 
     @Override
-    protected void onPostExecute(JSONObject[] data) {
-        if (dialog.isShowing())
-            dialog.dismiss();
-        activity.loadData(data);
+    protected void onPostExecute(JSONObject data) {
+        Log.w("########", "WebScraper onPostExecute()");
+        for (MethodReference methodReference : methodReferences)
+            methodReference.run(data);
     }
 
     private String fetch(String url) throws JSONException, IOException {
@@ -69,6 +64,7 @@ public class WebScraper extends AsyncTask<String, String, JSONObject[]> {
         while ((line = reader.readLine()) != null)
             builder.append(line);
         urlConnection.disconnect();
+        Log.w("########", "Fetching...");
         return builder.toString();
     }
 }

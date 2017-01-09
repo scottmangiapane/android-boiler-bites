@@ -83,7 +83,7 @@ public class EditActivity extends AppCompatActivity {
                 while (!items.isEmpty())
                     items.remove(0);
                 DataUtil du = new DataUtil(context);
-                LinkedList<String> data = du.getData();
+                LinkedList<String> data = du.getItems();
                 for (String keyword : data)
                     items.add(new ListItem(keyword));
                 if (items.size() == 0)

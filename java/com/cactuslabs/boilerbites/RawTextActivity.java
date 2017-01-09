@@ -3,18 +3,15 @@ package com.cactuslabs.boilerbites;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
-
 public class RawTextActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +19,14 @@ public class RawTextActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.raw_text_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        WebScraper webScraper = new WebScraper(this);
-        webScraper.execute();
+        Log.w("########", "Creating new DataUtil");
+        (new DataUtil(this)).getCache(new MethodReference() {
+            @Override
+            public void run(JSONObject data) {
+                for (int i = 0; i < 20; i++)
+                Log.w("########", "CACHE FOUND, #" + i);
+            }
+        });
     }
 
     @Override
@@ -40,7 +43,7 @@ public class RawTextActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadData(JSONObject[] data) {
+    /*public void loadData(JSONObject[] data) {
         DataUtil dataUtil = new DataUtil(this);
         ParseJSON parser = new ParseJSON();
         String text = "";
@@ -68,5 +71,5 @@ public class RawTextActivity extends AppCompatActivity {
         }
         if (text.length() > 0)
             ((TextView) findViewById(R.id.overview_text)).setText(text);
-    }
+    }*/
 }

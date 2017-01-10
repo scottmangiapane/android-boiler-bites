@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class WebScraper extends AsyncTask<String, String, JSONObject> {
     private HttpURLConnection urlConnection;
@@ -22,7 +25,7 @@ public class WebScraper extends AsyncTask<String, String, JSONObject> {
 
     public WebScraper(MethodReference... methodReferences) {
         this.methodReferences = methodReferences;
-        this.date = "11-07-2016"; //(new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
+        this.date = (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date());
         Log.w("########", "You made a WebScraper!");
         this.execute();
     }
@@ -33,13 +36,14 @@ public class WebScraper extends AsyncTask<String, String, JSONObject> {
         JSONObject data = new JSONObject();
         try {
             JSONArray locations = new JSONArray(fetch("https://api.hfs.purdue.edu/menus/v1/locations/"));
+            data.put("Date", date);
+            data.put("Locations", locations);
             for (int i = 0; i < locations.length(); i++) {
                 String url = "https://api.hfs.purdue.edu/menus/v2/locations/"
                         + locations.getString(i).replace(" ", "%20") + "/" + date;
                 JSONObject diningCourt = new JSONObject(fetch(url));
                 data.put(locations.getString(i), diningCourt);
             }
-            data.put("Locations", locations);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

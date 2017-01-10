@@ -23,8 +23,8 @@ public class RawTextActivity extends AppCompatActivity {
         (new DataUtil(this)).getCache(new MethodReference() {
             @Override
             public void run(JSONObject data) {
-                for (int i = 0; i < 20; i++)
-                Log.w("########", "CACHE FOUND, #" + i);
+                Log.w("########", "CACHE FOUND");
+                Log.w("########", data.toString());
             }
         });
     }

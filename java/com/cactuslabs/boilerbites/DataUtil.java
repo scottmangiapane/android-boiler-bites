@@ -9,7 +9,10 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class DataUtil {
     private Context context;
@@ -83,10 +86,21 @@ public class DataUtil {
         }
         Log.w("########", "Cache found. Attempting to parse...");
         JSONObject json = null;
+        String date = "";
         try {
             json = new JSONObject(data);
+            date = json.getString("Date");
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        Log.w("########", "Date = " + date);
+        Log.w("########", "Expected = " + (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date()));
+        if (!date.equals((new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date()))) {
+            Log.w("########", "Wrong date! Refreshing cache...");
+            editor.remove("cache");
+            editor.commit();
+            getCache(runner);
+            return;
         }
         runner.run(json);
     }

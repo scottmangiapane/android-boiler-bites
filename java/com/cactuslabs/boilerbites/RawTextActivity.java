@@ -1,16 +1,22 @@
 package com.cactuslabs.boilerbites;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedList;
+
 public class RawTextActivity extends AppCompatActivity {
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +25,38 @@ public class RawTextActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.raw_text_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Log.w("########", "Creating new DataUtil");
+        this.context = this;
         (new DataUtil(this)).getCache(new MethodReference() {
             @Override
             public void run(JSONObject data) {
-                Log.w("########", "CACHE FOUND");
-                Log.w("########", data.toString());
+                DataUtil dataUtil = new DataUtil(context);
+                ParseJSON parser = new ParseJSON();
+                String text = "";
+                try {
+                    JSONArray food = data.getJSONArray("Food");
+                    for (int i = 0; i < food.length(); i++) {
+                        text += food.getJSONObject(i).getString("Location") + "\n";
+                        JSONArray meals = food.getJSONObject(i).getJSONArray("Meals");
+                        for (int j = 0; j < meals.length(); j++) {
+                            try {
+                                JSONObject meal = meals.getJSONObject(j);
+                                String time = meal.getJSONObject("Hours").getString("StartTime") + " - "
+                                        + meal.getJSONObject("Hours").getString("EndTime");
+                                text += "    " + meal.getString("Name") + " (" + time + ")" + "\n";
+                                LinkedList<String> mealItems = parser.parseMeal(meal);
+                                for (String item : mealItems)
+                                    if (dataUtil.isItem(item))
+                                        text += "        " + item + "\n";
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (text.length() > 0)
+                    ((TextView) findViewById(R.id.overview_text)).setText(text);
             }
         });
     }
@@ -42,34 +74,4 @@ public class RawTextActivity extends AppCompatActivity {
             finish();
         return super.onOptionsItemSelected(item);
     }
-
-    /*public void loadData(JSONObject[] data) {
-        DataUtil dataUtil = new DataUtil(this);
-        ParseJSON parser = new ParseJSON();
-        String text = "";
-        try {
-            for (JSONObject diningCourt : data) {
-                text += diningCourt.getString("Location") + "\n";
-                JSONArray meals = diningCourt.getJSONArray("Meals");
-                for (int i = 0; i < meals.length(); i++) {
-                    try {
-                        JSONObject meal = meals.getJSONObject(i);
-                        String time = meal.getJSONObject("Hours").getString("StartTime") + " - "
-                                + meal.getJSONObject("Hours").getString("EndTime");
-                        text += "    " + meal.getString("Name") + " (" + time + ")" + "\n";
-                        LinkedList<String> mealItems = parser.parseMeal(meal);
-                        for (String item : mealItems)
-                            if (dataUtil.isItem(item))
-                                text += "        " + item + "\n";
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (text.length() > 0)
-            ((TextView) findViewById(R.id.overview_text)).setText(text);
-    }*/
 }

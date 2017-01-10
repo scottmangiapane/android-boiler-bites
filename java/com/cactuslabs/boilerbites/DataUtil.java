@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,23 +67,17 @@ public class DataUtil {
     }
 
     public void getCache(final MethodReference runner) {
-        Log.w("########", "Running getCache()");
         String data = sharedPreferences.getString("cache", "");
-        Log.w("########", "Fetching cache in memory");
-        Log.w("########", data);
         if (data.equals("")) {
             new WebScraper(runner, new MethodReference() {
                 @Override
                 public void run(JSONObject data) {
-                    Log.w("########", "Storing new cache in memory");
-                    Log.w("########", data.toString());
                     editor.putString("cache", data.toString());
                     editor.commit();
                 }
             });
             return;
         }
-        Log.w("########", "Cache found. Attempting to parse...");
         JSONObject json = null;
         String date = "";
         try {
@@ -93,10 +86,7 @@ public class DataUtil {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.w("########", "Date = " + date);
-        Log.w("########", "Expected = " + (new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date()));
         if (!date.equals((new SimpleDateFormat("MM-dd-yyyy", Locale.US)).format(new Date()))) {
-            Log.w("########", "Wrong date! Refreshing cache...");
             editor.remove("cache");
             editor.commit();
             getCache(runner);
